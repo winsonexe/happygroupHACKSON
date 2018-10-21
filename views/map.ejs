@@ -8,17 +8,20 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>The Big Picture - Start Bootstrap Template</title>
+    <title>happy kids</title>
 
     <!-- Bootstrap core CSS -->
     <link href="http://localhost:3000/stylesheets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 
     <!-- map -->
     <title>loadmapasyncHTML</title>
     <style type='text/css'>body{margin:0;padding:0;overflow:hidden;font-family:'Segoe UI',Helvetica,Arial,Sans-Serif}</style>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=AoXYGtDKUHd2yYE-e5PDZBQm7aR1AcwZijMYfOrXmCcZ3CcsHd7XsIlO20H5Yc_q&callback=loadMapScenario' async defer></script>
-   
+
+
+    <!-- 上傳表單的狗狗出生日日曆 -->
 
 
   </head>
@@ -26,55 +29,424 @@
       <div id='printoutPanel'></div>
 
       <div id='myMap' style='width: 100vw; height: 100vh;'></div>
-  
-  
+
+
      <style type='text/css'>
-     
+
      </style>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
-      <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
-          </ul>
+      <div class="container-fluid">
+        <div class="row">
+
+          <!-- 下方按鈕 -->
+          <a class="nav-link" data-toggle="modal" data-target="#login">
+            <font color="white">登入</font>
+          </a>
+
+          <a class="nav-link" data-toggle="modal" data-target="#updogs">
+            <font color="white">上傳汪</font>
+          </a>
+
+          <a class="nav-link" data-toggle="modal" data-target="#selectall">
+            <font color="white">篩選</font>
+          </a>
+
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
         </div>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+               <!-- 下方表單 -->
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#contactus">
+                  聯絡我們
+                </a>
+              </li>
+            </ul>
+          </div>
+
+
       </div>
     </nav>
 
-    <!-- Page Content -->
-    <section>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <h1 class="mt-5">The Big Picture</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt voluptates rerum eveniet sapiente repellat esse, doloremque quod recusandae deleniti nostrum assumenda vel beatae sed aut modi nesciunt porro quisquam voluptatem.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+
 
     <!-- Bootstrap core JavaScript -->
     <script src="http://localhost:3000/stylesheets/vendor/jquery/jquery.min.js"></script>
     <script src="http://localhost:3000/stylesheets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="http://localhost:3000/javascripts/mapindex.js" defer></script>
   </body>
+
+
+
+
+
+
+
+  <!-- 會員按鈕功能區 -->
+  <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <h5 class="modal-title" id="loginLabel">
+          快樂小夥伴
+          </h5>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- 表單模組 -->
+          <form>
+            <div class="form-group">
+              <label for="login username">使用者名稱</label>
+              <input type="text" class="form-control" id="login username" aria-describedby="emailHelp" placeholder="請輸入使用者名稱">
+              <small id="emailHelp" class="form-text text-muted">不會使用於其他地方，請安心填寫</small>
+            </div>
+            <div class="form-group">
+              <label for="login password">密碼</label>
+              <input type="password" class="form-control" id="login password" placeholder="請輸入密碼">
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="Verification code">
+              <label class="form-check-label" for="Verification code">驗證碼</label>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">送出</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sign">
+                註冊
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 會員按鈕功能區 -->
+
+  <!-- 註冊 -->
+    <div class="modal fade" id="sign" tabindex="-1" role="dialog" aria-labelledby="signLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="signLabel">歡迎註冊</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          <!-- 註冊表單 -->
+            <form>
+
+              <div class="form-group row">
+                <label for="sign username" class="col-sm-4 col-form-label">使用者名稱</label>
+                  <div class="col-sm">
+                    <input type="text" class="form-control" id="sign username" placeholder="請輸入使用者名稱">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="sign password" class="col-sm-4 col-form-label">密碼</label>
+                  <div class="col-sm">
+                    <input type="password" class="form-control" id="sign password" placeholder="請輸入密碼">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="sign phonenumber" class="col-sm-4 col-form-label">電話號碼</label>
+                <div class="col-sm">
+                  <input type="text" class="form-control" id="sign phonenumber" placeholder="請輸入電話">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="sign facebook" class="col-sm-4 col-form-label">臉書帳號</label>
+                <div class="col-sm">
+                  <input type="text" class="form-control" id="sign facebook" placeholder="請輸入Facebook帳號">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="sign line" class="col-sm-4 col-form-label">line</label>
+                <div class="col-sm">
+                  <input type="text" class="form-control" id="sign line" placeholder="請輸入line帳號">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="sign email" class="col-sm-4 col-form-label">信箱</label>
+                <div class="col-sm">
+                  <input type="email" class="form-control" id="sign email" aria-describedby="emailHelp" placeholder="請輸入E-mail">
+                </div>
+              </div>
+
+
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">註冊</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sign">
+                  註冊
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary">註冊</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 註冊 -->
+
+
+
+
+
+  <!-- 上傳汪 -->
+  <div class="modal fade" id="updogs" tabindex="-1" role="dialog" aria-labelledby="updogsLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updogsLabel">汪汪上傳</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- 上傳表單 -->
+          <form>
+            <!-- 上傳標題 -->
+            <div class="form-group row">
+              <label for="updogtitle" class="col-sm-4 col-form-label">標題</label>
+              <div class="col-sm">
+                <input type="text" class="form-control" id="updogtitle1" placeholder="請輸入標題">
+              </div>
+            </div>
+
+            <!-- 上傳照片 -->
+
+            <div class="form-group">
+              <label for="updogpicture">上傳狗狗照片</label>
+              <input type="file" class="form-control-file" id="updogpicture">
+            </div>
+
+
+            <!-- 標籤 -->
+            <div class="form-group row">
+              <label for="upselectkind" class="col-sm-4 col-form-label">標籤</label>
+              <div class="col-sm">
+                <select id="upselectekind" class="form-control">
+                  <option selected>請選擇標籤</option>
+                  <option>流浪</option>
+                  <option>協尋</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 上傳毛色 -->
+            <div class="form-group row">
+              <label for="upselectedcolor" class="col-sm-4 col-form-label">毛色</label>
+              <div class="col-sm">
+                <select id="upselectedcolor" class="form-control">
+                  <option selected>不知道什麼顏色呢~~</option>
+                  <option>黃</option>
+                  <option>黑</option>
+                  <option>白</option>
+                  <option>混色</option>
+                  <option>其他</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 狗狗出生日 -->
+            <!-- <p>日期：<input type="text" id="datepicker"></p> -->
+
+            <!-- 上傳結紮情況 -->
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">結紮與否</label>
+                <div class="col-sm">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="givebirthOptions" id="givebirth1" value="option1">
+                    <label class="form-check-label" for="givebirth1">已結紮</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="givebirthOptions" id="givebirth2" value="option2">
+                    <label class="form-check-label" for="givebirth2">未結紮</label>
+                  </div>
+                </div>
+              </div>
+
+
+
+            <!-- <div class="form-group row">
+              <label class="col-sm col-form-label">聯絡資訊(預設會員資料)</label>
+            </div> -->
+
+
+            <div class="form-group row">
+              <label for="upusername" class="col-sm-4 col-form-label">使用者名稱</label>
+              <div class="col-sm">
+                <input type="text" class="form-control" id="upusername" placeholder="請輸入使用者名稱">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="upphonenumber" class="col-sm-4 col-form-label">電話號碼</label>
+              <div class="col-sm">
+                <input type="text" class="form-control" id="upphonenumber" placeholder="請輸入電話">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="upfacebook" class="col-sm-4 col-form-label">臉書帳號</label>
+              <div class="col-sm">
+                <input type="text" class="form-control" id="upfacebook" placeholder="請輸入Facebook帳號">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="upline" class="col-sm-4 col-form-label">line</label>
+              <div class="col-sm">
+                <input type="text" class="form-control" id="upline" placeholder="請輸入line帳號">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="upemail" class="col-sm-4 col-form-label">信箱</label>
+              <div class="col-sm">
+                <input type="email" class="form-control" id="upemail" aria-describedby="emailHelp" placeholder="請輸入E-mail">
+              </div>
+            </div>
+
+
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary upload" id="upload">上傳</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 篩選功能區 -->
+  <div class="modal fade" id="selectall" tabindex="-1" role="dialog" aria-labelledby="selectallLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="selectallLabel">找到你的小夥伴</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- 表單內容 -->
+          <form>
+            <!-- 品種 -->
+            <div class="form-group row">
+              <label for="selectbreed" class="col-sm-2 col-form-label">品種</label>
+              <div class="col-sm">
+                <select id="selectbreed" class="form-control">
+                  <option selected>不知道什麼狗狗~~</option>
+                  <option>狗狗1</option>
+                  <option>狗狗2</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 毛色 -->
+            <div class="form-group row">
+              <label for="selectedcolor" class="col-sm-2 col-form-label">毛色</label>
+              <div class="col-sm-10">
+                <select id="selectedcolor" class="form-control">
+                  <option selected>不知道什麼顏色呢~~</option>
+                  <option>黃</option>
+                  <option>黑</option>
+                  <option>白</option>
+                  <option>混色</option>
+                  <option>其他</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 城市 -->
+            <div class="form-group row">
+              <label for="selectedcity" class="col-sm-2 col-form-label">城市</label>
+              <div class="col-sm-10">
+                <select id="selectedcity" class="form-control">
+                  <option selected>不知道什麼地點呢~~</option>
+                  <option>台北市</option>
+                  <option>新北市</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 成犬幼犬 -->
+            <fieldset class="form-group">
+              <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">大小</legend>
+                <div class="col-sm-10">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="selectsizeOptions" id="selectsize1" value="option1">
+                    <label class="form-check-label" for="selectsize1">成犬</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="selectsizeOptions" id="selectsize2" value="option2">
+                    <label class="form-check-label" for="selectsize2">幼犬</label>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+
+          </form>
+
+
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">篩選</button>
+          </div>
+        </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 篩選功能區 -->
+
+
+
+  <!-- 聯絡我們 -->
+  <div class="modal fade" id="contactus" tabindex="-1" role="dialog" aria-labelledby="contactusLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contactusLabel">快樂小夥伴團隊</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>感謝大家的使用，希望小夥伴們越來越好</p>
+          <p>聯絡信箱:快樂小夥伴團隊@gamil.com</p>
+          <p>連絡電話:09happyhappy</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </html>
