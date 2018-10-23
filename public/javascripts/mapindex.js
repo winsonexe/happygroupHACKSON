@@ -1,5 +1,5 @@
 var map;
-window.onload=loadMapScenario();
+
 
 
 function loadMapScenario() {
@@ -53,15 +53,59 @@ $("#img_upload_file1").change(function() {
 
 }
 */
-$('#upload').click(function (){   //上傳動物
-    alert('title');
-    var title=$('#updogtitle1').text();                     //標題
-    var tag=$("#upselectkind :selected").text();         //標籤
-    var dogcolor=$("updelectedcolor :selected").text();   //毛色
-    var ifcut=$("input[name=radioName]:checked").val();  //結渣
+$("#dogcalender").daterangepicker(      //選擇日曆
+    {
+        singleDatePicker: true,                    //兩行設為單一日曆 原本預設為區間
+        showDropdowns: true,
+        autoUpdateInput: false,                 //清除預設 因可能有未知
+        
+        
+    }
+);
+$("#dogcalender").on("apply.daterangepicker", function(ev, picker) {   //清除預設後需啟動否則當掉
+    $(this).val(picker.startDate.format("MM/DD/YYYY"));
+});
+
+$("#upload").click(function (){   //上傳動物
+   
+    var title=$('#updogtitle').val();                           //標題
+    var photo=$("#updogpicture").val();                          //照片上傳
+    var tag=$("#upselectkind :selected").val();                  //標籤
+    var dogcolor=$("#upselectcolor :selected").val();           //毛色
+    var ifcut=$("input[name=givebirthOptions]:checked").val();  //結渣
+    var birthday=$("#dogcalender").val();                        //狗的出生日
+    var introduction=$("#introductiontext").val();               //狗的其他描述
+    var username=$("#upusername").val();                        //po主名稱
+    var phonenumber=$("#upphonenumber").val();                  //po主電話
+    var facebookid=$("#upfacebook").val();                       //po主facebook
+    var lineid=$("#upline").val();                               //po主line
+    var email=$("#upemail").val();                                //po主email
+    var nowtime=new Date();                                       //po的上傳時間  一個月消失
+
+    alert(title+' '+photo+'  '+tag+' '+dogcolor+' '+ifcut+' '+birthday+' '
+    +introduction+'  '+username+'  '
+    +phonenumber+' '+facebookid+' '+lineid+' '+email+' '+nowtime);
     
-    alert('title');
-    /*$.ajax({
+    $.ajax({
+    url: '/map/uploaddog',
+    type: 'POST',
+    data:{title:title,photo:photo,tag:tag,dogcolor:dogcolor,ifcut:ifcut,
+            birthday:birthday,introduction:introduction,username:username,
+            phonenumber:phonenumber,facebookid:facebookid,lineid:lineid,
+            email:email,nowtime:nowtime
+        },
+    
+        error: function(xhr) {
+            alert('Ajax request 發生錯誤');
+        },
+        success: function(response) {
+            alert('上傳成功！');
+        
+        }
+    });
+    
+});
+/*$.ajax({
     url: '/upload',
     type: 'POST',
     data: {},
@@ -75,4 +119,3 @@ $('#upload').click(function (){   //上傳動物
         }
     });
     */
-});
