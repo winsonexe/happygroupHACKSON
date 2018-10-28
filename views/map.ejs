@@ -11,53 +11,100 @@
     <title>happy kids</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="http://localhost:3000/stylesheets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./stylesheets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap &jquery-->
-    <script src="http://localhost:3000/stylesheets/vendor/jquery/jquery.min.js"></script>
-    <script src="http://localhost:3000/stylesheets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./stylesheets/vendor/jquery/jquery.min.js"></script>
+    <script src="./stylesheets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- map -->
     <title>loadmapasyncHTML</title>
     <style type='text/css'>body{margin:0;padding:0;overflow:hidden;font-family:'Segoe UI',Helvetica,Arial,Sans-Serif}</style>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=AoXYGtDKUHd2yYE-e5PDZBQm7aR1AcwZijMYfOrXmCcZ3CcsHd7XsIlO20H5Yc_q&callback=loadMapScenario' async defer></script>
-
+    <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
 
     <!-- 上傳表單的狗狗出生日日曆CDN -->
-   
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.25/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.25/daterangepicker.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.25/daterangepicker.min.css" rel="stylesheet"></link>
 
+    <!-- 驗證碼 -->
+    <style>
+    p.wrong {
+        display: none;
+    }
+
+    p.wrong.shake {
+        display: block;
+    }
+
+    p.wrong.shake {
+        animation: shake .4s cubic-bezier(.36, .07, .19, .97) both;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+    }
+
+    @keyframes shake {
+        10%,
+        90% {
+            transform: translate3d(-1px, 0, 0);
+        }
+        20%,
+        80% {
+            transform: translate3d(1px, 0, 0);
+        }
+        30%,
+        50%,
+        70% {
+            transform: translate3d(-2px, 0, 0);
+        }
+        40%,
+        60% {
+            transform: translate3d(2px, 0, 0);
+        }
+    }
+
+    .controls img {
+        height: 20px;
+    }
+    </style>
+
   </head>
   <body onload='loadMapScenario()';>
-      <div id='printoutPanel'></div>
+    <div id='printoutPanel'></div> 
+    <div id='searchBoxContainer'> 
+    <img src="images/happdog.jpg" height="42" width="42"> 
+    <input type= 'text' id= 'searchBox'/></div>
 
       <div id='myMap' style='width: 100vw; height: 100vh;'></div>
+
+
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
         <div class="container-fluid">
           <div class="row">
-  
+
             <!-- 下方按鈕 -->
             <a class="nav-link" data-toggle="modal" data-target="#login">
-              <font color="white">登入</font>
+              <font color="white" id="login1">登入</font>
             </a>
-  
-            <a class="nav-link" data-toggle="modal" data-target="#updogs">
-              <font color="white">上傳汪</font>
+
+            <a class="nav-link uploadwun" data-toggle="modal" data-target="#updogs" aria-disabled="true">
+              <font color="white">上傳狗狗資訊</font>
             </a>
-  
+
             <a class="nav-link" data-toggle="modal" data-target="#selectall">
               <font color="white">篩選</font>
             </a>
-  
-  
+          </div>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-          </div>
+          
             <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
                  <!-- 下方表單 -->
@@ -68,54 +115,64 @@
                 </li>
               </ul>
             </div>
-  
-  
+
+
         </div>
       </nav>
-  
-  
-  
-     
-    
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- 會員按鈕功能區 -->
     <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-  
+
             <h5 class="modal-title" id="loginLabel">
             快樂小夥伴
             </h5>
-  
+
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <!-- 表單模組 -->
-            <form>
+            <!-- 登入 -->
+            <form class="needs-validation"  id="login1" role="form" data-toggle="validator">
               <div class="form-group">
                 <label for="login username">使用者名稱</label>
-                <input type="text" class="form-control" id="login username" aria-describedby="emailHelp" placeholder="請輸入使用者名稱">
+                  <input type="text" class="form-control" id="loginusername" aria-describedby="emailHelp" placeholder="請輸入使用者名稱" required>
+                <div class="invalid-feedback">
+                  使用者名稱不可空白!
+                </div>
                 <small id="emailHelp" class="form-text text-muted">不會使用於其他地方，請安心填寫</small>
               </div>
+
               <div class="form-group">
                 <label for="login password">密碼</label>
-                <input type="password" class="form-control" id="login password" placeholder="請輸入密碼">
+                  <input type="password" class="form-control" id="loginpassword" placeholder="請輸入密碼" required>
+                <div class="invalid-feedback">
+                  密碼不可空白!
+                </div>
               </div>
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="Verification code">
-                <label class="form-check-label" for="Verification code">驗證碼</label>
+             
+
+
               </div>
+
+
+
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">送出</button>
+                <button type="submit" class="btn btn-primary" id="loginsubmit">送出</button>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sign">
                   註冊
                 </button>
@@ -124,9 +181,9 @@
           </div>
         </div>
       </div>
-    </div>
+    
     <!-- 會員按鈕功能區 -->
-  
+
     <!-- 註冊 -->
       <div class="modal fade" id="sign" tabindex="-1" role="dialog" aria-labelledby="signLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -139,75 +196,75 @@
             </div>
             <div class="modal-body">
             <!-- 註冊表單 -->
-              <form>
-  
+              <form class="needs-validation" novalidate data-toggle="validator">
+
                 <div class="form-group row">
                   <label for="sign username" class="col-sm-4 col-form-label">使用者名稱</label>
                     <div class="col-sm">
-                      <input type="text" class="form-control" id="sign username" placeholder="請輸入使用者名稱">
+                      <input type="text" class="form-control" id="signusername" placeholder="請輸入使用者名稱" required>
+                      <div class="invalid-feedback">
+                        使用者名稱不可空白!
+                      </div>
                     </div>
                 </div>
-  
+
                 <div class="form-group row">
                   <label for="sign password" class="col-sm-4 col-form-label">密碼</label>
                     <div class="col-sm">
-                      <input type="password" class="form-control" id="sign password" placeholder="請輸入密碼">
+                      <input type="password" class="form-control" id="signpassword" placeholder="請輸入密碼" required>
+                      <div class="invalid-feedback">
+                        密碼不可空白!
+                      </div>
                     </div>
                 </div>
-  
+
                 <div class="form-group row">
                   <label for="sign phonenumber" class="col-sm-4 col-form-label">電話號碼</label>
                   <div class="col-sm">
-                    <input type="text" class="form-control" id="sign phonenumber" placeholder="請輸入電話">
+                      <input type="text"  class="form-control" id="signphonenumber" placeholder="請輸入電話" required pattern='[0]\d{5,15}'>
+                    <div class="invalid-feedback">
+                      電話號碼格式錯誤!
+                    </div>
                   </div>
                 </div>
-  
+
                 <div class="form-group row">
                   <label for="sign facebook" class="col-sm-4 col-form-label">臉書帳號</label>
                   <div class="col-sm">
-                    <input type="text" class="form-control" id="sign facebook" placeholder="請輸入Facebook帳號">
+                    <input type="text" class="form-control" id="signfacebook" placeholder="請輸入Facebook帳號" >
                   </div>
                 </div>
-  
+
                 <div class="form-group row">
                   <label for="sign line" class="col-sm-4 col-form-label">line</label>
                   <div class="col-sm">
-                    <input type="text" class="form-control" id="sign line" placeholder="請輸入line帳號">
+                    <input type="text" class="form-control" id="signline" placeholder="請輸入line帳號">
                   </div>
                 </div>
-  
+
                 <div class="form-group row">
                   <label for="sign email" class="col-sm-4 col-form-label">信箱</label>
                   <div class="col-sm">
-                    <input type="email" class="form-control" id="sign email" aria-describedby="emailHelp" placeholder="請輸入E-mail">
+                    <input type="email" class="form-control" id="signemail" aria-describedby="emailHelp" placeholder="請輸入E-mail">
                   </div>
                 </div>
-  
-  
-  
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">註冊</button>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sign">
-                    註冊
-                  </button>
+
+
                 </div>
-  
-              </form>
-  
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-              <button type="button" class="btn btn-primary">註冊</button>
-            </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                  <button type="submit" class="btn btn-primary" id="singup">註冊</button>
+                </div>
+            </form>
           </div>
         </div>
       </div>
       <!-- 註冊 -->
-  
-  
-  
-  
-  
+
+
+
+
+
     <!-- 上傳汪 -->
     <div class="modal fade" id="updogs" tabindex="-1" role="dialog" aria-labelledby="updogsLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -218,31 +275,42 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          <form class="needs-validation" id="frmUploadFile" enctype='multipart/form-data' novalidate >
           <div class="modal-body">
             <!-- 上傳表單 -->
-            <form>
+
               <!-- 上傳標題 -->
               <div class="form-group row">
-                <label for="updogtitle" class="col-sm-4 col-form-label">標題</label>
+                <label for="updogtitlze" class="col-sm-4 col-form-label">標題</label>
                 <div class="col-sm">
-                  <input type="text" class="form-control" id="updogtitle" placeholder="請輸入標題">
+                  <input type="text" class="form-control" id="updogtitle" placeholder="請輸入標題" required>
+                  <div class="invalid-feedback">
+                    標題不可空白!
+                  </div>
                 </div>
               </div>
-  
+
               <!-- 上傳照片 -->
-  
+
               <div class="form-group">
                 <label for="updogpicture">上傳狗狗照片</label>
-                <input type="file" class="form-control-file" id="updogpicture">
+                <input type="file" class="form-control-file" id="updogpicture" accept="image/gif, image/jpeg, image/png "  name="manyimg" required>
+                <img id="dogimage" class=".img-fluid" style="display:none; max-width:100%; height:auto;" src="#" />
+                <div class="invalid-feedback">
+                  請上傳照片!
+                </div>
               </div>
-  
-  
+
+
               <!-- 標籤 -->
               <div class="form-group row">
                 <label for="upselectkind" class="col-sm-4 col-form-label">標籤</label>
                 <div class="col-sm">
-                  <select id="upselectkind" class="form-control">
-                    <option selected>請選擇標籤</option>
+                  <select id="upselectkind" class="form-control"  required>
+                    <div class="invalid-feedback">
+                      請勿空白!
+                    </div>
+                    <option value="">請選擇標籤</option>
                     <option>流浪</option>
                     <option>走失</option>
                     <option>協尋</option>
@@ -251,13 +319,63 @@
                   </select>
                 </div>
               </div>
-  
+
+              
+              <!-- 上傳品種 -->
+              <div class="form-group row">
+                <label for="selectbreed" class="col-sm-2 col-form-label">品種</label>
+                <div class="col-sm">
+                <input type="text" class="form-control" id="selectbreed" placeholder="請輸入狗狗品種" list="updogkind_list">
+                <datalist id="updogkind_list">
+                <option >台灣土狗</option>
+                <option >拉布拉多</option>
+                <option >哈士奇</option>
+                <option >柯基</option>
+                <option >黃金獵犬</option>
+                <option >柴犬</option>
+                <option >貴賓狗</option>
+                <option >臘腸狗</option>
+                <option >其他</option>
+                </datalist>
+                </div>
+              </div>
+
+              <!-- 性別 -->
+              <fieldset class="form-group">
+                <div class="row">
+                  <legend class="col-form-label col-sm-2 pt-0">性別</legend>
+                  <div class="col-sm-10">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="upselectsexOptions" id="upselectsex1" value="公">
+                      <label class="form-check-label" for="upselectsex1">公</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="upselectsexOptions" id="upselectsex2" value="母">
+                      <label class="form-check-label" for="upselectsex2">母</label>
+                      <!-- 幼犬 -->
+                      <div class="col-sm-10">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="upsmalldogCheck">
+                          <label class="custom-control-label" for="upsmalldogCheck">幼犬</label>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+
+
               <!-- 上傳毛色 -->
               <div class="form-group row">
                 <label for="upselectcolor" class="col-sm-4 col-form-label">毛色</label>
                 <div class="col-sm">
-                  <select id="upselectcolor" class="form-control">
-                    <option selected>請選擇顏色</option>
+                  <select id="upselectcolor" class="form-control" required>
+                    <div class="invalid-feedback">
+                      請勿空白!
+                    </div>
+                    <option value="">請選擇顏色</option>
                     <option>黃</option>
                     <option>黑</option>
                     <option>白</option>
@@ -266,35 +384,35 @@
                   </select>
                 </div>
               </div>
-  
+
               <!-- 狗狗出生日 -->
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">狗狗出生日</label>
                 <div class="col-sm">
-                    <input class="form-control" id="dogcalender" type="text"/>
+                    <input class="form-control" id="dogcalender" type="text" required>
                 </div>
             </div>
               <!-- <p>日期：<input type="text" id="datepicker"></p> -->
-  
+
               <!-- 上傳結紮情況 -->
                 <div class="form-group row">
                   <label class="col-sm-4 col-form-label">結紮與否</label>
                   <div class="col-sm">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="givebirthOptions" id="givebirth1" value="已結紮">
+                      <input class="form-check-input" type="radio" name="givebirthOptions" id="givebirth1" value="已結紮" required>
                       <label class="form-check-label" for="givebirth1">已結紮</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="givebirthOptions" id="givebirth2" value="未結紮">
+                      <input class="form-check-input" type="radio" name="givebirthOptions" id="givebirth2" value="未結紮" required>
                       <label class="form-check-label" for="givebirth2">未結紮</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="givebirthOptions" id="givebirth3" value="未知">
+                        <input class="form-check-input" type="radio" name="givebirthOptions" id="givebirth3" value="未知" required>
                         <label class="form-check-label" for="givebirth3ˇ">未知</label>
                       </div>
                   </div>
                 </div>
-                
+
                <!-- 詳細情況描述-->
                 <div class="form-group row">
                     <label for="introductionbox" class="col-sm-4 col-form-label">其他描述</label>
@@ -302,62 +420,67 @@
                         <textarea class="form-control" id="introductiontext" rows="3"></textarea>
                     </div>
                  </div>
-  
-  
+
+
               <!-- <div class="form-group row">
                 <label class="col-sm col-form-label">聯絡資訊(預設會員資料)</label>
               </div> -->
-  
-  
+
+
               <div class="form-group row">
                 <label for="upusername" class="col-sm-4 col-form-label">使用者名稱</label>
                 <div class="col-sm">
                   <input type="text" class="form-control" id="upusername" placeholder="請輸入使用者名稱">
                 </div>
               </div>
-  
+
               <div class="form-group row">
                 <label for="upphonenumber" class="col-sm-4 col-form-label">電話號碼</label>
                 <div class="col-sm">
-                  <input type="text" class="form-control" id="upphonenumber" placeholder="請輸入電話">
+                  <input type="text" class="form-control" id="upphonenumber" placeholder="請輸入電話" required pattern='[0]\d{5,15}'>
+                  <div class="invalid-feedback">
+                    電話號碼格式錯誤!
+                  </div>
                 </div>
               </div>
-  
+
               <div class="form-group row">
                 <label for="upfacebook" class="col-sm-4 col-form-label">臉書帳號</label>
                 <div class="col-sm">
                   <input type="text" class="form-control" id="upfacebook" placeholder="請輸入Facebook帳號">
                 </div>
               </div>
-  
+
               <div class="form-group row">
                 <label for="upline" class="col-sm-4 col-form-label">line</label>
                 <div class="col-sm">
                   <input type="text" class="form-control" id="upline" placeholder="請輸入line帳號">
                 </div>
               </div>
-  
+
               <div class="form-group row">
                 <label for="upemail" class="col-sm-4 col-form-label">信箱</label>
                 <div class="col-sm">
                   <input type="email" class="form-control" id="upemail" aria-describedby="emailHelp" placeholder="請輸入E-mail">
                 </div>
               </div>
-  
-  
-  
-            </form>
-  
-          </div>
-          <div class="modal-footer">
-            <button  class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button class="btn btn-primary " id="upload" >上傳</a>
-          </div>
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+              <button  class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button class="btn btn-primary " type="submit" id="upload" >上傳</a>
+            </div>
+          </form>
+
         </div>
       </div>
     </div>
-  
-  
+
+
     <!-- 篩選功能區 -->
     <div class="modal fade" id="selectall" tabindex="-1" role="dialog" aria-labelledby="selectallLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -370,25 +493,52 @@
           </div>
           <div class="modal-body">
             <!-- 表單內容 -->
-            <form>
-              <!-- 品種 -->
+            <form class="needs-validation" novalidate data-toggle="validator">
+
               <div class="form-group row">
-                <label for="selectbreed" class="col-sm-2 col-form-label">品種</label>
+                <label for="selectkind" class="col-sm-2 col-form-label">標籤</label>
                 <div class="col-sm">
-                  <select id="selectbreed" class="form-control">
-                    <option selected>不知道什麼狗狗~~</option>
-                    <option>狗狗1</option>
-                    <option>狗狗2</option>
+                  <select id="selectkind" class="form-control"  required>
+                    <div class="invalid-feedback">
+                      請勿空白!
+                    </div>
+                    <option value="0">請選擇標籤</option>
+                    <option>流浪</option>
+                    <option>走失</option>
+                    <option>協尋</option>
+                    <option>待領養</option>
+                    <option>其他</option>
                   </select>
                 </div>
               </div>
-  
+
+
+
+              <!-- 上傳品種 -->
+              <div class="form-group row">
+                <label for="selectbreed2" class="col-sm-2 col-form-label">品種</label>
+                <div class="col-sm">
+                <input type="text" class="form-control" id="selectbreed2" placeholder="請輸入狗狗品種" list="updogkind_list">
+                <datalist id="updogkind_list">
+                <option >台灣土狗</option>
+                <option >拉布拉多</option>
+                <option >哈士奇</option>
+                <option >柯基</option>
+                <option >黃金獵犬</option>
+                <option >柴犬</option>
+                <option >貴賓狗</option>
+                <option >臘腸狗</option>
+                <option >其他</option>
+                </datalist>
+                </div>
+              </div>
+
               <!-- 毛色 -->
               <div class="form-group row">
                 <label for="selectedcolor" class="col-sm-2 col-form-label">毛色</label>
                 <div class="col-sm-10">
                   <select id="selectedcolor" class="form-control">
-                    <option selected>不知道什麼顏色呢~~</option>
+                    <option selected value="0">不知道什麼顏色呢~~</option>
                     <option>黃</option>
                     <option>黑</option>
                     <option>白</option>
@@ -397,57 +547,52 @@
                   </select>
                 </div>
               </div>
-  
-              <!-- 城市 -->
-              <div class="form-group row">
-                <label for="selectedcity" class="col-sm-2 col-form-label">城市</label>
-                <div class="col-sm-10">
-                  <select id="selectedcity" class="form-control">
-                    <option selected>不知道什麼地點呢~~</option>
-                    <option>台北市</option>
-                    <option>新北市</option>
-                  </select>
-                </div>
-              </div>
-  
-              <!-- 成犬幼犬 -->
+
+              <!-- 性別 -->
               <fieldset class="form-group">
                 <div class="row">
-                  <legend class="col-form-label col-sm-2 pt-0">大小</legend>
+                  <legend class="col-form-label col-sm-2 pt-0">性別</legend>
                   <div class="col-sm-10">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="selectsizeOptions" id="selectsize1" value="option1">
-                      <label class="form-check-label" for="selectsize1">成犬</label>
+                      <input class="form-check-input" type="radio" name="selectsexOptions" id="selectsex1" value="option1">
+                      <label class="form-check-label" for="selectsex1">公</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="selectsizeOptions" id="selectsize2" value="option2">
-                      <label class="form-check-label" for="selectsize2">幼犬</label>
+                      <input class="form-check-input" type="radio" name="selectsexOptions" id="selectsex2" value="option2">
+                      <label class="form-check-label" for="selectsex2">母</label>
+                      <!-- 幼犬 -->
+                      <div class="col-sm-10">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="smalldogCheck">
+                          <label class="custom-control-label" for="smalldogCheck">幼犬</label>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
               </fieldset>
-  
-  
+
+
             </form>
-  
-  
-  
+
+
+
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">篩選</button>
+              <button type="submit" id="selectwant" class="btn btn-primary">篩選</button>
             </div>
           </div>
-  
-  
-  
+
+
+
             </div>
           </div>
         </div>
-      </div>
-    </div>
+     
     <!-- 篩選功能區 -->
-  
-  
-  
+
+
+
     <!-- 聯絡我們 -->
     <div class="modal fade" id="contactus" tabindex="-1" role="dialog" aria-labelledby="contactusLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -466,11 +611,226 @@
         </div>
       </div>
     </div>
+    <!-- 詳細資訊Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  <div class="modal-content">
+  <div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">詳細資訊</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <form>
+  <div class="modal-body">
   
+  <div class="form-group row">
+  <label for="infotitle" class="col-sm-5 col-form-label">標題:</label>
+  <div class="col-sm">
+  <div id='ss1'>
+  
+  </div>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <div class="col-sm">
+  <div >
+  
+  </div>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <label for="infolabel" class="col-sm-5 col-form-label">標籤:</label>
+  <div class="col-sm">
+  <span id='ss2'>
+  
+  </span>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <label for="infokind" class="col-sm-5 col-form-label">品種:</label>
+  <div class="col-sm">
+  <span id='ss3'>
+  
+  </span>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <label for="infosex" class="col-sm-5 col-form-label">性別:</label>
+  <div class="col-sm">
+  <span id='ss4'>
+  
+  </span>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <label for="infosmalldogcheck" class="col-sm-5 col-form-label">幼犬:</label>
+  <div class="col-sm">
+  <span id='ss5'>
+  
+  </span>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <label for="infocolor" class="col-sm-5 col-form-label">毛色:</label>
+  <div class="col-sm">
+  <span id='ss6'>
+  
+  </span>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <label for="infobirthday" class="col-sm-5 col-form-label">生日:</label>
+  <div class="col-sm">
+  <span id='ss7'>
+  
+  </span>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <label for="infogivebirth" class="col-sm-5 col-form-label">結紮:</label>
+  <div class="col-sm">
+  <span id='ss8'>
+  
+  </span>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <label for="infodetail" class="col-sm-5 col-form-label">更多資訊:</label>
+  <div class="col-sm">
+  <span id='ss9'>
+  
+  </span>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <label for="infouser" class="col-sm col-form-label">聯絡人資訊</label>
+  
+  </div>
+  
+  <div class="form-group row">
+  <label for="infousername" class="col-sm-5 col-form-label">使用者名稱:</label>
+  <div class="col-sm">
+  <span id='ss10'>
+  
+  </span>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <label for="infophonenumber" class="col-sm-5 col-form-label">電話號碼:</label>
+  <div class="col-sm">
+  <span id='ss11'>
+  
+  </span>
+  </div>
+  </div>
+  
+  
+  <div class="form-group row">
+  <label for="infofacebook" class="col-sm-5 col-form-label">臉書帳號:</label>
+  <div class="col-sm">
+  <span id='ss12'>
+  
+  </span>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <label for="infoline" class="col-sm-5 col-form-label">line:</label>
+  <div class="col-sm">
+  <span id='ss13'>
+  
+  </span>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+  <label for="infoemail" class="col-sm-5 col-form-label">信箱:</label>
+  <div class="col-sm">
+  <span id='ss14'>
+  
+  </span>
+  </div>
+  </div>
+  </div>
+  <div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+  </div>
+  </form>
+  </div>
+  </div>
+  </div>
      <!-- Bootstrap core JavaScript -->
-    
-    
-  
-   <script src="http://localhost:3000/javascripts/mapindex.js" defer></script>
+
+
+   <script src="./javascripts/mapindex.js" defer></script>
+
+
+
+   <!-- 品種限制 -->
+   <script>
+   // 找出所有绑定了datalist的input文本框
+   var inputs = document.querySelectorAll('input[list]');
+   for (var i = 0; i < inputs.length; i++) {
+       //当输入文本框的值发生改变
+       inputs[i].addEventListener('change', function() {
+           var optionFound = false,
+           datalist = this.list;
+
+           //判断用户的输入是否存在于datalist的下拉列表框的数据项中
+           for (var j = 0; j < datalist.options.length; j++) {
+               if (this.value == datalist.options[j].value) {
+                   optionFound = true;
+                   break;
+               }
+           }
+
+           //使用IE 10的Validation API中的setCustomValidity方法对是否存在合法的输入值进行前端的响应展示
+           if (optionFound) {
+               this.setCustomValidity('');
+           } else {
+               //如果用户的输入不在datalist列表中，前端显示相关错误信息
+               this.setCustomValidity('Please select a valid value.');
+           }
+       });
+   }
+   </script>
+
+ 
+   
+     <!-- bootstrap的表單驗證 -->
+     <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+      </script>
+
+
 </body>
 </html>
